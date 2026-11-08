@@ -1,23 +1,39 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Users, User, BookOpen, Settings } from "lucide-react";
+import homeBg from "@/assets/home-bg.jpg";
+import { Scene, TopBar, gameButton } from "@/components/game/ui";
+import { lesson } from "@/game/lessons/nguvan6-bai4";
+import { startBgm } from "@/game/audio";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Hành trình về miền ký ức – Ngữ văn 6 Bài 4" },
+      { name: "description", content: "Lên đoàn tàu ký ức qua 5 trạm: ca dao, lục bát, cây tre, chuyện cổ và tiếng Việt." },
+      { property: "og:title", content: "Hành trình về miền ký ức" },
+      { property: "og:description", content: "Trò chơi ôn tập Ngữ văn 6 – Bài 4: Quê hương yêu dấu." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <Scene bg={homeBg}>
+      <TopBar>
+        <Link to="/giao-vien" className={gameButton({ variant: "ghost", size: "sm" })}><Settings className="size-5" /> Giáo viên</Link>
+      </TopBar>
+      <main className="flex flex-1 flex-col items-center justify-center px-4 pb-10 text-center">
+        <p className="text-lg font-semibold tracking-[0.3em] text-gold md:text-xl">🚂 ĐOÀN TÀU KÝ ỨC 🚂</p>
+        <h1 className="text-glow mt-3 font-display text-5xl font-black leading-tight text-foreground md:text-8xl">{lesson.title}</h1>
+        <p className="mt-4 rounded-full bg-lacquer-grad px-6 py-2 text-lg font-bold text-accent-foreground md:text-2xl">{lesson.subtitle}</p>
+        <div className="mt-10 grid w-full max-w-4xl gap-4 md:grid-cols-3" onClick={() => startBgm()}>
+          <Link to="/doi" className={gameButton({ variant: "gold", size: "lg" })}><Users className="size-7" /> HAI ĐỘI THI ĐẤU</Link>
+          <Link to="/ca-nhan" className={gameButton({ variant: "jade", size: "lg" })}><User className="size-7" /> HÀNH TRÌNH CÁ NHÂN</Link>
+          <Link to="/huong-dan" className={gameButton({ variant: "lacquer", size: "lg" })}><BookOpen className="size-7" /> HƯỚNG DẪN CHƠI</Link>
+        </div>
+      </main>
+      <footer className="pb-4 text-center text-base font-semibold text-foreground/90">{lesson.credit}</footer>
+    </Scene>
   );
 }
