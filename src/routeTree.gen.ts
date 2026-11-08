@@ -10,11 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CaNhanRouteImport } from './routes/ca-nhan'
+import { Route as DoiRouteImport } from './routes/doi'
 import { Route as HuongDanRouteImport } from './routes/huong-dan'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaNhanRoute = CaNhanRouteImport.update({
+  id: '/ca-nhan',
+  path: '/ca-nhan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoiRoute = DoiRouteImport.update({
+  id: '/doi',
+  path: '/doi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HuongDanRoute = HuongDanRouteImport.update({
@@ -25,27 +37,35 @@ const HuongDanRoute = HuongDanRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ca-nhan': typeof CaNhanRoute
+  '/doi': typeof DoiRoute
   '/huong-dan': typeof HuongDanRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ca-nhan': typeof CaNhanRoute
+  '/doi': typeof DoiRoute
   '/huong-dan': typeof HuongDanRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ca-nhan': typeof CaNhanRoute
+  '/doi': typeof DoiRoute
   '/huong-dan': typeof HuongDanRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/huong-dan'
+  fullPaths: '/' | '/ca-nhan' | '/doi' | '/huong-dan'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/huong-dan'
-  id: '__root__' | '/' | '/huong-dan'
+  to: '/' | '/ca-nhan' | '/doi' | '/huong-dan'
+  id: '__root__' | '/' | '/ca-nhan' | '/doi' | '/huong-dan'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CaNhanRoute: typeof CaNhanRoute
+  DoiRoute: typeof DoiRoute
   HuongDanRoute: typeof HuongDanRoute
 }
 
@@ -56,6 +76,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ca-nhan': {
+      id: '/ca-nhan'
+      path: '/ca-nhan'
+      fullPath: '/ca-nhan'
+      preLoaderRoute: typeof CaNhanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doi': {
+      id: '/doi'
+      path: '/doi'
+      fullPath: '/doi'
+      preLoaderRoute: typeof DoiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/huong-dan': {
@@ -70,6 +104,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CaNhanRoute: CaNhanRoute,
+  DoiRoute: DoiRoute,
   HuongDanRoute: HuongDanRoute,
 }
 export const routeTree = rootRouteImport
