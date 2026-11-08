@@ -34,7 +34,11 @@ function SoloPage() {
   const [run, setRun] = useState<Run | null>(null);
   const settings = useSettings();
   const bank = useBank();
-  const start = (n = name) => setRun({ name: n.trim() || "Nhà thám hiểm", queue: buildQueue(bank, settings.stations, settings.perStation), key: Date.now() });
+  const start = (n = name) => {
+    if (!claimPlay()) { setRun(null); setExhausted(true); return; }
+    setExhausted(false);
+    setRun({ name: n.trim() || "Nhà thám hiểm", queue: buildQueue(bank, settings.stations, settings.perStation), key: Date.now() });
+  };
 
   if (!run) {
     return (
