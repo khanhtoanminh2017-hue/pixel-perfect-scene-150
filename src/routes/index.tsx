@@ -4,6 +4,7 @@ import homeBg from "@/assets/home-bg.jpg";
 import { Scene, TopBar, gameButton } from "@/components/game/ui";
 import { lesson } from "@/game/lessons/nguvan6-bai4";
 import { startBgm } from "@/game/audio";
+import { TrialNotice } from "@/components/game/TrialNotice";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -21,7 +22,7 @@ function Index() {
   return (
     <Scene bg={homeBg}>
       <TopBar>
-        <Link to="/giao-vien" className={gameButton({ variant: "ghost", size: "sm" })}><Settings className="size-5" /> Giáo viên</Link>
+        <Link to="/huong-dan" className={gameButton({ variant: "ghost", size: "sm" })}><Settings className="size-5" /> Hướng dẫn</Link>
       </TopBar>
       <main className="flex flex-1 flex-col items-center justify-center px-4 pb-10 text-center">
         <p className="text-lg font-semibold tracking-[0.3em] text-gold md:text-xl">🚂 ĐOÀN TÀU KÝ ỨC 🚂</p>
