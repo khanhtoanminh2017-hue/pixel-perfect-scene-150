@@ -4,7 +4,6 @@ import homeBg from "@/assets/home-bg.jpg";
 import { Scene, TopBar, gameButton } from "@/components/game/ui";
 import { lesson } from "@/game/lessons/nguvan6-bai4";
 import { startBgm } from "@/game/audio";
-import { TrialNotice } from "@/components/game/TrialNotice";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -29,14 +28,12 @@ function Index() {
         <p className="mt-3 text-lg font-semibold tracking-[0.3em] text-gold md:text-xl">🚂 ĐOÀN TÀU KÝ ỨC 🚂</p>
         <h1 className="text-glow mt-3 font-display text-5xl font-black leading-tight text-foreground md:text-8xl">{lesson.title}</h1>
         <p className="mt-4 rounded-full bg-lacquer-grad px-6 py-2 text-lg font-bold text-accent-foreground md:text-2xl">{lesson.subtitle}</p>
-        <div className="mt-5 w-full max-w-3xl"><TrialNotice /></div>
         <div className="mt-6 grid w-full max-w-4xl gap-4 md:grid-cols-3" onClick={() => startBgm()}>
           <Link to="/doi" className={gameButton({ variant: "gold", size: "lg" })}><Users className="size-7" /> HAI ĐỘI THI ĐẤU</Link>
           <Link to="/ca-nhan" className={gameButton({ variant: "jade", size: "lg" })}><User className="size-7" /> HÀNH TRÌNH CÁ NHÂN</Link>
           <Link to="/huong-dan" className={gameButton({ variant: "lacquer", size: "lg" })}><BookOpen className="size-7" /> HƯỚNG DẪN CHƠI</Link>
         </div>
       </main>
-      <footer className="pb-4 text-center text-base font-semibold text-foreground/90">{lesson.credit}</footer>
     </Scene>
   );
 }
