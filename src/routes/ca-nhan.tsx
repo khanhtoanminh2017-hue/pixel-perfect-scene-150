@@ -1,5 +1,3 @@
-import { claimPlay } from "@/game/trial";
-import { TrialExhausted, TrialNotice } from "@/components/game/TrialNotice";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import homeBg from "@/assets/home-bg.jpg";
@@ -30,13 +28,10 @@ interface Run { name: string; queue: Question[]; key: number }
 
 function SoloPage() {
   const [name, setName] = useState("");
-  const [exhausted, setExhausted] = useState(false);
   const [run, setRun] = useState<Run | null>(null);
   const settings = useSettings();
   const bank = useBank();
   const start = (n = name) => {
-    if (!claimPlay()) { setRun(null); setExhausted(true); return; }
-    setExhausted(false);
     setRun({ name: n.trim() || "Nhà thám hiểm", queue: buildQueue(bank, settings.stations, settings.perStation), key: Date.now() });
   };
 
@@ -48,8 +43,6 @@ function SoloPage() {
           <form className="paper-scroll animate-unfurl w-full max-w-xl rounded-3xl p-8 text-center" onSubmit={(e) => { e.preventDefault(); start(); }}>
             <div className="text-6xl">🚂</div>
             <h1 className="font-display text-4xl font-black">Hành trình cá nhân</h1>
-            <div className="mt-4"><TrialNotice compact /></div>
-            {exhausted && <TrialExhausted />}
             <label className="mt-6 block text-left text-lg font-semibold">Tên của em
               <input autoFocus value={name} maxLength={30} onChange={(e) => setName(e.target.value)} placeholder="Ví dụ: Minh Anh" className="mt-1 w-full rounded-xl border-2 border-ink/30 bg-paper px-4 py-3 text-2xl" />
             </label>
