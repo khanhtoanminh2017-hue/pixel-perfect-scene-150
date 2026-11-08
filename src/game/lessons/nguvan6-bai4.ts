@@ -9,7 +9,7 @@ import bg5 from "@/assets/st5-haidang.jpg";
 export const lesson: Lesson = {
   title: "HÀNH TRÌNH VỀ MIỀN KÝ ỨC",
   subtitle: "NGỮ VĂN 6 – BÀI 4: QUÊ HƯƠNG YÊU DẤU",
-  credit: "Thiết kế: Thầy Nguyễn Đức Thắng",
+  credit: "Người thiết kế: Thầy Nguyễn Đức Thắng – Trường THCS Nghĩa Lâm",
   stations: [
     { name: "Bến Ca Dao", topic: "Chùm ca dao về quê hương đất nước", mechanic: "Trả lời đúng để thắp sáng từng chiếc đèn lồng.", token: "🏮", memory: "Mảnh ký ức Ca Dao", bg: bg1 },
     { name: "Cầu Lục Bát", topic: "Thơ lục bát: số tiếng, vần, nhịp", mechanic: "Mỗi câu đúng hoàn thành một nhịp cầu.", token: "🌉", memory: "Mảnh ký ức Lục Bát", bg: bg2 },
