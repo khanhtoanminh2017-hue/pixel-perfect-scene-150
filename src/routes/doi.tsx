@@ -1,5 +1,3 @@
-import { claimPlay } from "@/game/trial";
-import { TrialExhausted, TrialNotice } from "@/components/game/TrialNotice";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { Pause, Play, SkipForward, RotateCcw, Scissors, Clock } from "lucide-react";
@@ -32,13 +30,10 @@ function TeamPage() {
   const bank = useBank();
   const [names, setNames] = useState<[string, string]>(settings.teamNames);
   const [timer, setTimer] = useState(settings.timer);
-  const [exhausted, setExhausted] = useState(false);
   const [game, setGame] = useState<{ queue: Question[]; tie: Question[]; key: number } | null>(null);
   useEffect(() => { setNames(settings.teamNames); setTimer(settings.timer); }, [settings.teamNames, settings.timer]);
 
   const start = () => {
-    if (!claimPlay()) { setExhausted(true); setGame(null); return; }
-    setExhausted(false);
     const n: [string, string] = [names[0].trim() || "Đội Tre Xanh", names[1].trim() || "Đội Lúa Vàng"];
     saveSettings({ teamNames: n, timer });
     // even count so both teams get the same number of turns
@@ -56,8 +51,6 @@ function TeamPage() {
         <main className="flex flex-1 items-center justify-center p-4">
           <div className="paper-scroll animate-unfurl w-full max-w-2xl rounded-3xl p-8">
             <h1 className="font-display text-4xl font-black">Hai đội thi đấu</h1>
-            <div className="mt-4"><TrialNotice compact /></div>
-            {exhausted && <TrialExhausted />}
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               {[0, 1].map((i) => (
                 <label key={i} className="block text-lg font-semibold">{i === 0 ? "🎋 Đội 1" : "🌾 Đội 2"}

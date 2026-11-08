@@ -5,6 +5,7 @@ import { useEffect, useState, type ButtonHTMLAttributes, type ReactNode } from "
 import { cn } from "@/lib/utils";
 import { isMuted, onMute, setMuted, sfx, startBgm } from "@/game/audio";
 import { lesson } from "@/game/lessons/nguvan6-bai4";
+import { PaymentDialog } from "@/components/game/PaymentDialog";
 
 export const gameButton = cva(
   "inline-flex items-center justify-center gap-2 rounded-2xl font-bold transition-all active:scale-95 disabled:opacity-40 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring",
@@ -35,6 +36,7 @@ export function useMuted() {
 export function TopBar({ children }: { children?: ReactNode }) {
   const muted = useMuted();
   const [fs, setFs] = useState(false);
+  const [paymentOpen, setPaymentOpen] = useState(false);
   useEffect(() => {
     const f = () => setFs(!!document.fullscreenElement);
     document.addEventListener("fullscreenchange", f);
@@ -46,7 +48,9 @@ export function TopBar({ children }: { children?: ReactNode }) {
         <Link to="/" className={gameButton({ variant: "ghost", size: "sm" })} aria-label="Về màn hình chính"><Home className="size-5" /></Link>
         {children}
       </div>
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2">
+        <span className="hidden text-xs font-semibold text-amber-100 sm:inline">BẢN DÙNG THỬ</span>
+        <button type="button" onClick={() => setPaymentOpen(true)} className="rounded-lg border border-amber-300/60 bg-black/40 px-2 py-1.5 text-xs font-semibold text-amber-100 transition hover:bg-amber-900/80 sm:px-3" aria-label="Mua bản quyền trò chơi giá 10.000 đồng">Mua bản quyền · 10.000đ</button>
         <button className={gameButton({ variant: "ghost", size: "sm" })} aria-label={muted ? "Bật âm thanh" : "Tắt âm thanh"} onClick={() => { startBgm(); setMuted(!muted); }}>
           {muted ? <VolumeX className="size-5" /> : <Volume2 className="size-5" />}
         </button>
@@ -54,6 +58,7 @@ export function TopBar({ children }: { children?: ReactNode }) {
           {fs ? <Minimize className="size-5" /> : <Maximize className="size-5" />}
         </button>
       </div>
+      <PaymentDialog open={paymentOpen} onClose={() => setPaymentOpen(false)} />
     </div>
   );
 }
@@ -67,7 +72,10 @@ export function Scene({ bg, children }: { bg: string; children: ReactNode }) {
         <div className="animate-drift absolute top-[8%] text-6xl opacity-60" style={{ animationDuration: "70s" }}>☁️</div>
         <div className="animate-drift absolute top-[18%] text-4xl opacity-40" style={{ animationDuration: "95s", animationDelay: "-40s" }}>☁️</div>
       </div>
-      <div className="relative z-10 flex min-h-screen flex-col">{children}</div>
+      <div className="relative z-10 flex min-h-screen flex-col">
+        {children}
+        <footer className="mt-auto px-3 pb-3 pt-3 text-center text-xs font-semibold text-amber-100/95 drop-shadow-[0_1px_3px_#000] md:text-sm">{lesson.credit}</footer>
+      </div>
     </div>
   );
 }
